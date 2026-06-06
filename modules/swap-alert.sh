@@ -7,7 +7,7 @@ STATE_SWAP_HIGH="${SERVUS_STATE_DIR}/swap_high_since"
 
 _get_swap_pct() {
     local total used
-    read -r _ total used _ < <(free -k | awk '/Swap:/')
+    read -r _ total used _ < <(free -k | awk '/Swap:/') || true
     [[ -z "$total" || "$total" -eq 0 ]] && { echo 0; return; }
     awk "BEGIN {printf \"%.0f\", ($used/$total)*100}"
 }

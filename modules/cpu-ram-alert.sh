@@ -9,9 +9,9 @@ STATE_RAM_HIGH="$SERVUS_STATE_DIR/ram_high_since"
 _get_cpu_pct() {
     # Sample CPU usage over 1 second via /proc/stat
     local cpu1 cpu2 idle1 idle2 total1 total2
-    read -r _ cpu1 < <(grep '^cpu ' /proc/stat)
+    read -r _ cpu1 < <(grep '^cpu ' /proc/stat) || true
     sleep 1
-    read -r _ cpu2 < <(grep '^cpu ' /proc/stat)
+    read -r _ cpu2 < <(grep '^cpu ' /proc/stat) || true
 
     local arr1=($cpu1) arr2=($cpu2)
     local user1=${arr1[0]} nice1=${arr1[1]} sys1=${arr1[2]} idle1=${arr1[3]}

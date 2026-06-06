@@ -13,7 +13,7 @@ run_system_info() {
 
     # RAM
     local total_ram_gb used_ram_gb free_ram_gb ram_use_pct
-    read -r _ total_ram_kb used_ram_kb free_ram_kb _ < <(free -k | awk '/Mem:/')
+    read -r _ total_ram_kb used_ram_kb free_ram_kb _ < <(free -k | awk '/Mem:/') || true
     total_ram_gb=$(awk "BEGIN {printf \"%.1f\", ${total_ram_kb:-0}/1024/1024}")
     used_ram_gb=$(awk "BEGIN {printf \"%.1f\", ${used_ram_kb:-0}/1024/1024}")
     free_ram_gb=$(awk "BEGIN {printf \"%.1f\", ${free_ram_kb:-0}/1024/1024}")
@@ -29,7 +29,7 @@ run_system_info() {
 
     # Disk (root)
     local disk_used_gb disk_total_gb disk_pct
-    read -r _ disk_total_kb disk_used_kb _ disk_pct _ < <(df / | awk 'NR==2')
+    read -r _ disk_total_kb disk_used_kb _ disk_pct _ < <(df / | awk 'NR==2') || true
     disk_used_gb=$(awk "BEGIN {printf \"%.1f\", ${disk_used_kb:-0}/1024/1024}")
     disk_total_gb=$(awk "BEGIN {printf \"%.1f\", ${disk_total_kb:-0}/1024/1024}")
 
