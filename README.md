@@ -8,7 +8,7 @@ A self-installing server utility kit for Linux. Automates the recurring chores t
 curl -fsSL https://raw.githubusercontent.com/ruhanirabin/servus/main/install.sh | sudo bash
 ```
 
-⚠️Requires: Linux with systemd, `curl`. Tested on Ubuntu, Debian, Rocky Linux, AlmaLinux.
+⚠️Requires: Linux with `systemd`, `curl`. Tested on Ubuntu, Debian, Rocky Linux, AlmaLinux.
 
 ## What it does
 
