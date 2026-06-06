@@ -4,8 +4,10 @@
 CRON_TAG="# servus-managed"
 
 # Returns a cron schedule string chosen interactively
+# Usage: pick_schedule <label> [default_choice]
 pick_schedule() {
     local label="$1"
+    local default="${2:-4}"
     echo "" >&2
     echo -e "${CYAN}Schedule for:${NC} ${BOLD}${label}${NC}" >&2
     echo "  1) Every 5 minutes    (*/5 * * * *)" >&2
@@ -18,8 +20,8 @@ pick_schedule() {
     echo "  8) Weekly (Sun 00:00) (0 0 * * 0)" >&2
     echo "  9) Custom cron expression" >&2
     echo "  0) Skip / disable" >&2
-    read -rp "  Choice [4]: " choice </dev/tty
-    case "${choice:-4}" in
+    read -rp "  Choice [${default}]: " choice </dev/tty
+    case "${choice:-$default}" in
         1) echo "*/5 * * * *" ;;
         2) echo "*/15 * * * *" ;;
         3) echo "*/30 * * * *" ;;
@@ -89,25 +91,25 @@ run_cron_manager() {
 
     local schedule
 
-    schedule=$(pick_schedule "disk-report (send disk stats to webhook)")
+    schedule=$(pick_schedule "disk-report (send disk stats to webhook)" 5)
     upsert_cron "disk-report" "$schedule" "/usr/local/bin/servus disk-report"
 
-    schedule=$(pick_schedule "log-vacuum (clean old log files)")
+    schedule=$(pick_schedule "log-vacuum (clean old log files)" 7)
     upsert_cron "log-vacuum" "$schedule" "/usr/local/bin/servus log-vacuum"
 
-    schedule=$(pick_schedule "cpu-ram-alert (check for sustained high CPU/RAM)")
+    schedule=$(pick_schedule "cpu-ram-alert (check for sustained high CPU/RAM)" 1)
     upsert_cron "cpu-ram-alert" "$schedule" "/usr/local/bin/servus cpu-ram-alert"
 
-    schedule=$(pick_schedule "service-watchdog (check services are running)")
+    schedule=$(pick_schedule "service-watchdog (check services are running)" 1)
     upsert_cron "service-watchdog" "$schedule" "/usr/local/bin/servus service-watchdog"
 
-    schedule=$(pick_schedule "swap-alert (check for sustained high swap usage)")
+    schedule=$(pick_schedule "swap-alert (check for sustained high swap usage)" 1)
     upsert_cron "swap-alert" "$schedule" "/usr/local/bin/servus swap-alert"
 
-    schedule=$(pick_schedule "tmp-cleanup (delete old files from /tmp)")
+    schedule=$(pick_schedule "tmp-cleanup (delete old files from /tmp)" 7)
     upsert_cron "tmp-cleanup" "$schedule" "/usr/local/bin/servus tmp-cleanup"
 
-    schedule=$(pick_schedule "heartbeat (ping uptime monitoring endpoints)")
+    schedule=$(pick_schedule "heartbeat (ping uptime monitoring endpoints)" 2)
     upsert_cron "heartbeat" "$schedule" "/usr/local/bin/servus heartbeat"
 
     echo ""
