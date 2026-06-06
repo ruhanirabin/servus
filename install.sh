@@ -57,7 +57,7 @@ info "Where should servus be installed?"
 echo "  1) /usr/local/bin        (recommended — system-wide)"
 echo "  2) /opt/servus/bin      (self-contained directory)"
 echo "  3) Custom path"
-read -rp "  Choice [1]: " _choice
+read -rp "  Choice [1]: " _choice </dev/tty
 case "${_choice:-1}" in
     1) INSTALL_BIN="/usr/local/bin" ;;
     2) INSTALL_BIN="/opt/servus/bin" ;;
@@ -70,7 +70,7 @@ esac
 
 if [[ -f "$INSTALL_BIN/servus" ]]; then
     warn "Existing servus installation detected at $INSTALL_BIN/servus"
-    read -rp "  Update to latest version? [Y/n]: " _upd
+    read -rp "  Update to latest version? [Y/n]: " _upd </dev/tty
     if [[ "${_upd,,}" == "n" ]]; then
         info "Update cancelled."
         exit 0
@@ -171,7 +171,7 @@ echo ""
 
 # --- Run setup wizard ---
 
-read -rp "Run setup wizard now? (configure webhook URL, thresholds, cron jobs) [Y/n]: " _setup
+read -rp "Run setup wizard now? (configure webhook URL, thresholds, cron jobs) [Y/n]: " _setup </dev/tty
 if [[ "${_setup,,}" != "n" ]]; then
     "$INSTALL_BIN/servus" setup
 else
