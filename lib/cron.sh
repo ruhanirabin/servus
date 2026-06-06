@@ -6,18 +6,18 @@ CRON_TAG="# servus-managed"
 # Returns a cron schedule string chosen interactively
 pick_schedule() {
     local label="$1"
-    echo ""
-    echo -e "${CYAN}Schedule for:${NC} ${BOLD}${label}${NC}"
-    echo "  1) Every 5 minutes    (*/5 * * * *)"
-    echo "  2) Every 15 minutes   (*/15 * * * *)"
-    echo "  3) Every 30 minutes   (*/30 * * * *)"
-    echo "  4) Hourly             (0 * * * *)"
-    echo "  5) Every 6 hours      (0 */6 * * *)"
-    echo "  6) Every 12 hours     (0 */12 * * *)"
-    echo "  7) Daily at midnight  (0 0 * * *)"
-    echo "  8) Weekly (Sun 00:00) (0 0 * * 0)"
-    echo "  9) Custom cron expression"
-    echo "  0) Skip / disable"
+    echo "" >&2
+    echo -e "${CYAN}Schedule for:${NC} ${BOLD}${label}${NC}" >&2
+    echo "  1) Every 5 minutes    (*/5 * * * *)" >&2
+    echo "  2) Every 15 minutes   (*/15 * * * *)" >&2
+    echo "  3) Every 30 minutes   (*/30 * * * *)" >&2
+    echo "  4) Hourly             (0 * * * *)" >&2
+    echo "  5) Every 6 hours      (0 */6 * * *)" >&2
+    echo "  6) Every 12 hours     (0 */12 * * *)" >&2
+    echo "  7) Daily at midnight  (0 0 * * *)" >&2
+    echo "  8) Weekly (Sun 00:00) (0 0 * * 0)" >&2
+    echo "  9) Custom cron expression" >&2
+    echo "  0) Skip / disable" >&2
     read -rp "  Choice [4]: " choice </dev/tty
     case "${choice:-4}" in
         1) echo "*/5 * * * *" ;;

@@ -85,6 +85,7 @@ run_uninstall() {
 
 case "${1:-help}" in
     setup)
+        exec 0</dev/tty
         source "$SERVUS_LIB_DIR/lib/setup.sh"
         source "$SERVUS_LIB_DIR/lib/cron.sh"
         run_setup
@@ -134,13 +135,14 @@ case "${1:-help}" in
         load_config
         source "$SERVUS_LIB_DIR/modules/heartbeat.sh"
         case "${2:-run}" in
-            add)    heartbeat_add ;;
-            remove) heartbeat_remove ;;
+            add)    exec 0</dev/tty; heartbeat_add ;;
+            remove) exec 0</dev/tty; heartbeat_remove ;;
             list)   heartbeat_list ;;
             run|*)  run_heartbeat ;;
         esac
         ;;
     cron)
+        exec 0</dev/tty
         source "$SERVUS_LIB_DIR/lib/cron.sh"
         run_cron_manager
         ;;
