@@ -66,7 +66,7 @@ run_status() {
 
 run_uninstall() {
     echo ""
-    read -rp "Remove all servus files, config, and cron jobs? [y/N]: " yn
+    read -rp "Remove all servus files, config, and cron jobs? [y/N]: " yn </dev/tty
     [[ "${yn,,}" != "y" ]] && { info "Uninstall cancelled."; exit 0; }
 
     source "$SERVUS_LIB_DIR/lib/cron.sh"

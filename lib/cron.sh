@@ -18,7 +18,7 @@ pick_schedule() {
     echo "  8) Weekly (Sun 00:00) (0 0 * * 0)"
     echo "  9) Custom cron expression"
     echo "  0) Skip / disable"
-    read -rp "  Choice [4]: " choice
+    read -rp "  Choice [4]: " choice </dev/tty
     case "${choice:-4}" in
         1) echo "*/5 * * * *" ;;
         2) echo "*/15 * * * *" ;;
@@ -28,7 +28,7 @@ pick_schedule() {
         6) echo "0 */12 * * *" ;;
         7) echo "0 0 * * *" ;;
         8) echo "0 0 * * 0" ;;
-        9) read -rp "  Enter cron expression: " custom; echo "$custom" ;;
+        9) read -rp "  Enter cron expression: " custom </dev/tty; echo "$custom" ;;
         0) echo "" ;;
         *) echo "0 * * * *" ;;
     esac

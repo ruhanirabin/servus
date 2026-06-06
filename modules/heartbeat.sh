@@ -118,11 +118,11 @@ HDR
     info "The name must have no spaces (use hyphens). Examples: main-site, db-server"
     echo ""
 
-    read -rp "  Name   : " hb_name
+    read -rp "  Name   : " hb_name </dev/tty
     [[ -z "$hb_name" ]] && { warn "Name cannot be empty."; return 1; }
     hb_name="${hb_name// /-}"
 
-    read -rp "  URL    : " hb_url
+    read -rp "  URL    : " hb_url </dev/tty
     [[ -z "$hb_url" ]] && { warn "URL cannot be empty."; return 1; }
 
     # Check for duplicate name
@@ -135,7 +135,7 @@ HDR
     success "Added: $hb_name → $hb_url"
 
     # Offer a test ping
-    read -rp "  Test it now? [Y/n]: " yn
+    read -rp "  Test it now? [Y/n]: " yn </dev/tty
     if [[ "${yn,,}" != "n" ]]; then
         local http_status
         http_status=$(curl -fsSL --connect-timeout 10 --max-time 15 \
@@ -154,7 +154,7 @@ heartbeat_remove() {
     entries=$(grep -v '^[[:space:]]*#' "$HEARTBEAT_CONF" 2>/dev/null | grep -v '^[[:space:]]*$' || true)
     [[ -z "$entries" ]] && return 0
 
-    read -rp "Enter the name to remove: " hb_name
+    read -rp "Enter the name to remove: " hb_name </dev/tty
     [[ -z "$hb_name" ]] && return 1
 
     if ! grep -q "^${hb_name}[[:space:]]" "$HEARTBEAT_CONF" 2>/dev/null; then
@@ -177,7 +177,7 @@ run_heartbeat_manager() {
     echo "  4) Test all endpoints now"
     echo "  0) Exit"
     echo ""
-    read -rp "Choice: " choice
+    read -rp "Choice: " choice </dev/tty
     case "$choice" in
         1) heartbeat_list ;;
         2) heartbeat_add ;;

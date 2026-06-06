@@ -61,7 +61,7 @@ read -rp "  Choice [1]: " _choice </dev/tty
 case "${_choice:-1}" in
     1) INSTALL_BIN="/usr/local/bin" ;;
     2) INSTALL_BIN="/opt/servus/bin" ;;
-    3) read -rp "  Enter path: " INSTALL_BIN
+    3) read -rp "  Enter path: " INSTALL_BIN </dev/tty
        [[ -z "$INSTALL_BIN" ]] && die "Path cannot be empty." ;;
     *) INSTALL_BIN="/usr/local/bin" ;;
 esac

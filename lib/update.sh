@@ -68,11 +68,11 @@ run_update() {
         echo -e "${YELLOW}║  https://github.com/ruhanirabin/servus/releases  ${NC}"
         echo -e "${YELLOW}╚══════════════════════════════════════════════════╝${NC}"
         echo ""
-        read -rp "Type 'yes' to proceed with the major upgrade: " confirm
+        read -rp "Type 'yes' to proceed with the major upgrade: " confirm </dev/tty
         [[ "$confirm" != "yes" ]] && { info "Upgrade cancelled."; return 0; }
     else
         echo -e "${GREEN}Non-breaking upgrade available (v${local_ver} → v${remote_ver}).${NC}"
-        read -rp "Upgrade now? [Y/n]: " confirm
+        read -rp "Upgrade now? [Y/n]: " confirm </dev/tty
         [[ "${confirm,,}" == "n" ]] && { info "Upgrade cancelled."; return 0; }
     fi
 
