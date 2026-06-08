@@ -49,6 +49,9 @@ run_status() {
         echo -e "${BOLD}Config:${NC} $SERVUS_CONF_FILE"
         while IFS='=' read -r key val; do
             [[ "$key" =~ ^#|^$ ]] && continue
+            if [[ "$key" == "WEBHOOK_URL" && -n "$val" ]]; then
+                val=$(echo "$val" | sed 's/\(.\{20\}\).*/\1***/')
+            fi
             printf "  %-26s %s\n" "$key" "$val"
         done < "$SERVUS_CONF_FILE"
     else

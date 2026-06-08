@@ -8,7 +8,7 @@ A self-installing server utility kit for Linux. Automates the recurring chores t
 curl -fsSL https://raw.githubusercontent.com/ruhanirabin/servus/main/install.sh | sudo bash
 ```
 
-⚠️Requires: Linux with `systemd`, `curl`. Tested on Ubuntu, Debian, Rocky Linux, AlmaLinux.
+⚠️Requires: Linux with `systemd`, `curl`, and `cron`. Tested on Ubuntu, Debian, Rocky Linux, AlmaLinux.
 
 ## What it does
 
@@ -77,20 +77,36 @@ servus help               # list all commands
 
 ## Webhook payload
 
-Every module sends a JSON payload. Example from `disk-report`:
+Every module sends a JSON payload. Example from `disk-report` (v1.1.0+):
 
 ```json
 {
   "host_name": "web01",
   "host_ip": "192.168.1.10",
   "timestamp": "2026-01-15 09:00:00",
+  "disk_device": "/dev/sda1",
   "disk_used_gb": 42.5,
   "disk_total_gb": 100.0,
+  "disk_avail_gb": 57.5,
   "disk_use_pct": 42,
   "mysql_space_mb": 1024,
-  "logs_space_mb": 310
+  "logs_space_mb": 310,
+  "cpu_count": 4,
+  "cpu_use_pct": 15,
+  "total_ram_gb": 8.0,
+  "mem_used_gb": 3.2,
+  "ram_use_pct": 40
 }
 ```
+
+## Recent Changes (v1.1.0)
+- **Automation Ready**: `disk-report` now includes explicit `cpu_use_pct` and `ram_use_pct` fields for direct threshold evaluation by external tools.
+- **Stability**: Fixed `df` parsing on systems with long device names (LVM/ZFS) and replaced fragile `uptime` parsing with `/proc/loadavg`.
+- **Safety**: `log-vacuum` now explicitly excludes `/var/log/servus/` to protect internal audit logs.
+- **Security**: `WEBHOOK_URL` is now masked in `servus status` output to prevent token leakage.
+- **Reliability**: Installer now explicitly checks for the `cron` package to prevent silent scheduling failures on minimal OS images.
+
+See the full [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Requirements
 

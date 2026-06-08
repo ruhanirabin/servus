@@ -21,7 +21,7 @@ run_log_vacuum() {
                 (( truncated++ )) || true
                 (( total_freed_kb += size_before / 1024 )) || true
             }
-        done < <(find "$dir" -type f \( -name "*.log" -o -name "*.log.*" \) -mtime "+${days}" -print0 2>/dev/null)
+        done < <(find "$dir" -type f \( -name "*.log" -o -name "*.log.*" \) -not -path "/var/log/servus/*" -mtime "+${days}" -print0 2>/dev/null)
     done
 
     # Vacuum systemd journal

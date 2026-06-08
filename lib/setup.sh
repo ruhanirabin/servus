@@ -35,7 +35,7 @@ run_setup() {
     echo ""
     info "Disk device for usage reporting (auto = detect from / mount)."
     local detected_device
-    detected_device=$(df / | awk 'NR==2 {print $1}')
+    detected_device=$(df -P / | awk 'NR==2 {print $1}')
     read -rp "  Disk device [${existing_disk_device}, detected: ${detected_device}]: " input </dev/tty
     DISK_DEVICE="${input:-$existing_disk_device}"
 
