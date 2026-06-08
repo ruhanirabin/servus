@@ -51,7 +51,7 @@ The cron wizard offers: every 5 min, 15 min, 30 min, hourly, every 6h, every 12h
 servus update
 ```
 
-Checks GitHub for a newer version. Minor and patch updates apply with a single confirmation. Major version upgrades show a warning and require explicit confirmation — check the [changelog](https://github.com/ruhanirabin/servus/releases) first.
+Checks GitHub for a newer version. Minor and patch updates apply with a single confirmation. Major version upgrades show a warning and require explicit confirmation — check the [CHANGELOG.md](CHANGELOG.md) first.
 
 ## Other commands
 
