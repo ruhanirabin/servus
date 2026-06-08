@@ -38,7 +38,7 @@ _print_banner() {
 [[ "$(uname -s)" != "Linux" ]] && die "servus requires a Linux system."
 [[ $EUID -ne 0 ]] && die "Please run as root: sudo bash install.sh  (or: curl ... | sudo bash)"
 command -v curl &>/dev/null || die "curl is required. Install it first."
-command -v bc &>/dev/null   || warn "bc not found — some numeric formatting may be limited."
+command -v crontab &>/dev/null || die "The 'cron' package is required for scheduling. Install it first: apt install cron"
 
 # systemd is required for service-watchdog; bail early with a clear message
 if ! command -v systemctl &>/dev/null || ! systemctl list-units &>/dev/null 2>&1; then

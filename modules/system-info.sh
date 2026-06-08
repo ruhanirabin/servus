@@ -9,7 +9,7 @@ run_system_info() {
     local cpu_count cpu_model cpu_load
     cpu_count=$(nproc)
     cpu_model=$(grep -m1 "model name" /proc/cpuinfo 2>/dev/null | cut -d: -f2 | xargs || echo "unknown")
-    cpu_load=$(uptime | awk -F'load average:' '{print $2}' | xargs)
+    cpu_load=$(awk '{print $1, $2, $3}' /proc/loadavg)
 
     # RAM
     local total_ram_gb used_ram_gb free_ram_gb ram_use_pct
@@ -29,7 +29,7 @@ run_system_info() {
 
     # Disk (root)
     local disk_used_gb disk_total_gb disk_pct
-    read -r _ disk_total_kb disk_used_kb _ disk_pct _ < <(df / | awk 'NR==2') || true
+    read -r _ disk_total_kb disk_used_kb _ disk_pct _ < <(df -P / | awk 'NR==2') || true
     disk_used_gb=$(awk "BEGIN {printf \"%.1f\", ${disk_used_kb:-0}/1024/1024}")
     disk_total_gb=$(awk "BEGIN {printf \"%.1f\", ${disk_total_kb:-0}/1024/1024}")
 
